@@ -1,0 +1,108 @@
+{
+  "brand": "Aurora",
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "cart": "Cart",
+    "wishlist": "Wishlist",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "account": "Account",
+    "orders": "Orders",
+    "settings": "Settings"
+  },
+  "hero": {
+    "title": "Elevate your everyday.",
+    "subtitle": "Modern essentials crafted for life.",
+    "cta": "Shop Now",
+    "searchPlaceholder": "Search for products, categories, or brands..."
+  },
+  "home": {
+    "featured": "Featured Products",
+    "viewAll": "View All",
+    "categories": "Shop by Category"
+  },
+  "products": {
+    "title": "All Products",
+    "showing": "Showing {count} products",
+    "filterBy": "Filter by",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "sortBy": "Sort by",
+    "sortOptions": {
+      "newest": "Newest First",
+      "priceAsc": "Price: Low to High",
+      "priceDesc": "Price: High to Low",
+      "nameAsc": "Name: A to Z"
+    },
+    "noResults": "No products found",
+    "searchResults": "Search results for '{query}'",
+    "searchNoResults": "No products found for '{query}'",
+    "tryDifferentSearch": "Try a different search term or browse all products",
+    "viewAll": "View All Products",
+    "pagination": {
+      "showing": "Showing {start}-{end} of {total} results",
+      "pageOf": "Page {current} of {total}"
+    }
+  },
+  "product": {
+    "addToCart": "Add to cart",
+    "outOfStock": "Out of stock",
+    "wishlist": "Wishlist",
+    "removeFromWishlist": "Remove from wishlist"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty",
+    "checkout": "Checkout"
+  },
+  "wishlist": {
+    "title": "My Wishlist",
+    "empty": "Your wishlist is empty",
+    "emptyDescription": "Start adding products you love to your wishlist",
+    "browseProducts": "Browse Products",
+    "continueShopping": "Continue Shopping",
+    "addToCart": "Add to Cart",
+    "clearAll": "Clear All",
+    "itemsInWishlist": "{count} {count, plural, one {item} other {items}} in your wishlist"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "signIn": "Sign in",
+    "signUp": "Create account"
+  },
+  "footer": {
+    "description": "Modern essentials crafted for life.",
+    "quickLinks": "Quick Links",
+    "customerService": "Customer Service",
+    "company": "Company",
+    "followUs": "Follow Us",
+    "newsletter": "Newsletter",
+    "newsletterDescription": "Subscribe to get updates on new products and offers",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "allRightsReserved": "All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contact": "Contact Us",
+    "about": "About Us",
+    "faq": "FAQ",
+    "shipping": "Shipping Info",
+    "returns": "Returns"
+  },
+  "common": {
+    "search": "Search",
+    "searchPlaceholder": "Search products...",
+    "searchResults": "Search results",
+    "clear": "Clear",
+    "loading": "Loading...",
+    "currency": "$",
+    "previous": "Previous",
+    "next": "Next"
+  }
+}

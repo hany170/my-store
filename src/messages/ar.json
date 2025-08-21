@@ -1,0 +1,108 @@
+{
+  "brand": "أورورا",
+  "nav": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "cart": "السلة",
+    "wishlist": "قائمة الأمنيات",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "signOut": "تسجيل الخروج",
+    "account": "الحساب",
+    "orders": "الطلبات",
+    "settings": "الإعدادات"
+  },
+  "hero": {
+    "title": "ارتق بيومك.",
+    "subtitle": "أساسيات عصرية لحياتك.",
+    "cta": "تسوق الآن",
+    "searchPlaceholder": "البحث عن المنتجات والفئات والعلامات التجارية..."
+  },
+  "home": {
+    "featured": "المنتجات المميزة",
+    "viewAll": "عرض الكل",
+    "categories": "تسوق حسب الفئة"
+  },
+  "products": {
+    "title": "جميع المنتجات",
+    "showing": "عرض {count} منتج",
+    "filterBy": "تصفية حسب",
+    "category": "الفئة",
+    "allCategories": "جميع الفئات",
+    "sortBy": "ترتيب حسب",
+    "sortOptions": {
+      "newest": "الأحدث أولاً",
+      "priceAsc": "السعر: من الأقل إلى الأعلى",
+      "priceDesc": "السعر: من الأعلى إلى الأقل",
+      "nameAsc": "الاسم: أ إلى ي"
+    },
+    "noResults": "لم يتم العثور على منتجات",
+    "searchResults": "نتائج البحث عن '{query}'",
+    "searchNoResults": "لم يتم العثور على منتجات لـ '{query}'",
+    "tryDifferentSearch": "جرب مصطلح بحث مختلف أو تصفح جميع المنتجات",
+    "viewAll": "عرض جميع المنتجات",
+    "pagination": {
+      "showing": "عرض {start}-{end} من {total} نتيجة",
+      "pageOf": "الصفحة {current} من {total}"
+    }
+  },
+  "product": {
+    "addToCart": "أضف إلى السلة",
+    "outOfStock": "غير متوفر",
+    "wishlist": "قائمة الأمنيات",
+    "removeFromWishlist": "إزالة من قائمة الأمنيات"
+  },
+  "cart": {
+    "title": "سلتك",
+    "empty": "سلتك فارغة",
+    "checkout": "الدفع"
+  },
+  "wishlist": {
+    "title": "قائمة أمنياتي",
+    "empty": "قائمة أمنياتك فارغة",
+    "emptyDescription": "ابدأ بإضافة المنتجات التي تحبها إلى قائمة أمنياتك",
+    "browseProducts": "تصفح المنتجات",
+    "continueShopping": "مواصلة التسوق",
+    "addToCart": "أضف إلى السلة",
+    "clearAll": "مسح الكل",
+    "itemsInWishlist": "{count, plural, one {عنصر} other {عناصر}} في قائمة أمنياتك"
+  },
+  "auth": {
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "name": "الاسم",
+    "haveAccount": "لديك حساب بالفعل",
+    "noAccount": "ليس لديك حساب",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب"
+  },
+  "footer": {
+    "description": "أساسيات عصرية لحياتك.",
+    "quickLinks": "روابط سريعة",
+    "customerService": "خدمة العملاء",
+    "company": "الشركة",
+    "followUs": "تابعنا",
+    "newsletter": "النشرة الإخبارية",
+    "newsletterDescription": "اشترك للحصول على تحديثات المنتجات والعروض الجديدة",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "subscribe": "اشتراك",
+    "allRightsReserved": "جميع الحقوق محفوظة.",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfService": "شروط الخدمة",
+    "contact": "اتصل بنا",
+    "about": "من نحن",
+    "faq": "الأسئلة الشائعة",
+    "shipping": "معلومات الشحن",
+    "returns": "الإرجاع"
+  },
+  "common": {
+    "search": "بحث",
+    "searchPlaceholder": "البحث في المنتجات...",
+    "searchResults": "نتائج البحث",
+    "clear": "مسح",
+    "loading": "جاري التحميل...",
+    "currency": "ر.س",
+    "previous": "السابق",
+    "next": "التالي"
+  }
+}

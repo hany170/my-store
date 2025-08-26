@@ -39,15 +39,19 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Parse items from line items
+    // Parse items from line items - handle both old and new Stripe API structures
     const items = session.line_items?.data
-      ?.filter(item => item.price_data?.product_data?.name !== 'Shipping' && item.price_data?.product_data?.name !== 'Tax')
+      ?.filter(item => {
+        // Filter out shipping and tax items
+        const itemName = item.description || 'Unknown Product';
+        return itemName !== 'Shipping' && itemName !== 'Tax';
+      })
       ?.map(item => ({
-        title: item.price_data?.product_data?.name || 'Unknown Product',
+        title: item.description || 'Unknown Product',
         qty: item.quantity || 0,
-        unit_price_cents: item.price_data?.unit_amount || 0,
-        total_cents: (item.price_data?.unit_amount || 0) * (item.quantity || 0),
-        image: item.price_data?.product_data?.images?.[0] || null,
+        unit_price_cents: item.amount_total || 0,
+        total_cents: (item.amount_total || 0) * (item.quantity || 0),
+        image: null, // Line items don't have direct image access in this API version
       })) || [];
 
     const orderDetails = {

@@ -17,6 +17,8 @@ export const pathnames = {
   '/admin': '/admin',
   '/admin/products': '/admin/products',
   '/admin/products/new': '/admin/products/new',
+  '/admin/users': '/admin/users',
+  '/admin/settings': '/admin/settings',
   '/contact': '/contact',
   '/faq': '/faq',
   '/shipping': '/shipping',

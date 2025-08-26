@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, LogOut, Settings, ShoppingBag, Heart, ChevronDown } from 'lucide-react';
+import { User, LogOut, Heart, ChevronDown } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
@@ -120,14 +120,7 @@ export function UserMenu() {
               <User className="h-4 w-4 mr-3" />
               {t('account')}
             </Link>
-            <Link
-              href="/orders"
-              className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <ShoppingBag className="h-4 w-4 mr-3" />
-              {t('orders')}
-            </Link>
+
             <Link
               href="/wishlist"
               className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -136,14 +129,7 @@ export function UserMenu() {
               <Heart className="h-4 w-4 mr-3" />
               {t('wishlist')}
             </Link>
-            <Link
-              href="/settings"
-              className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <Settings className="h-4 w-4 mr-3" />
-              {t('settings')}
-            </Link>
+
           </div>
 
           {/* Sign Out */}

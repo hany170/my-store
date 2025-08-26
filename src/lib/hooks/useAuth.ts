@@ -48,7 +48,7 @@ export function useAuth() {
         toast.error(error.message);
         return;
       }
-      router.push('/auth');
+      router.push('/auth/sign-in');
     } catch (error) {
       toast.error('Failed to sign out');
     }

@@ -7,7 +7,6 @@ import { Separator } from '@/components/ui/separator';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from '@/i18n/routing';
 import { toast } from 'sonner';
-import { loadStripe } from '@stripe/stripe-js';
 import { 
   CreditCard, 
   Lock, 
@@ -23,11 +22,6 @@ import {
   MapPin
 } from 'lucide-react';
 import Image from 'next/image';
-
-// Initialize Stripe
-const stripePromise = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
-  : null;
 
 interface CartItemWithPrice {
   id: string;
@@ -205,11 +199,14 @@ export default function CheckoutPage() {
       }
 
       // Fallback to Stripe.js redirect if URL wasn't returned.
-      if (!stripePromise) {
+      const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+      if (!publishableKey) {
         toast.error('Stripe is not configured');
         return;
       }
-      const stripe = await stripePromise;
+
+      const { loadStripe } = await import('@stripe/stripe-js');
+      const stripe = await loadStripe(publishableKey);
       if (!stripe) {
         toast.error('Stripe failed to load');
         return;

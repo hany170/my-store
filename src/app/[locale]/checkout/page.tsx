@@ -25,7 +25,9 @@ import {
 import Image from 'next/image';
 
 // Initialize Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripePromise = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+  : null;
 
 interface CartItemWithPrice {
   id: string;
@@ -128,6 +130,15 @@ export default function CheckoutPage() {
     fetchPrices();
   }, [items, router]);
 
+  // Avoid navigating during render; redirect after loading settles.
+  useEffect(() => {
+    if (isLoading || isLoadingPrices) return;
+    if (items.length === 0) return;
+    if (itemsWithPrices.length === 0) {
+      router.push('/cart');
+    }
+  }, [isLoading, isLoadingPrices, items.length, itemsWithPrices.length, router]);
+
   const handleInputChange = (field: keyof CheckoutForm | 'address', value: string | any) => {
     if (field === 'address') {
       setFormData(prev => ({
@@ -168,12 +179,6 @@ export default function CheckoutPage() {
     
     setIsProcessing(true);
     try {
-      const stripe = await stripePromise;
-      if (!stripe) {
-        toast.error('Stripe failed to load');
-        return;
-      }
-
       // Create checkout session
       const response = await fetch('/api/checkout/create-session', {
         method: 'POST',
@@ -186,17 +191,31 @@ export default function CheckoutPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create checkout session');
+        const err = await response.json().catch(() => null);
+        const message = err?.error || 'Failed to create checkout session';
+        throw new Error(message);
       }
 
-      const { sessionId } = await response.json();
-      
-      // Redirect to Stripe Checkout
-      const { error } = await stripe.redirectToCheckout({ sessionId });
-      
-      if (error) {
-        toast.error(error.message || 'Checkout failed');
+      const { sessionId, url } = await response.json();
+
+      // Prefer a direct redirect via the URL returned by Stripe.
+      if (url) {
+        window.location.assign(url);
+        return;
       }
+
+      // Fallback to Stripe.js redirect if URL wasn't returned.
+      if (!stripePromise) {
+        toast.error('Stripe is not configured');
+        return;
+      }
+      const stripe = await stripePromise;
+      if (!stripe) {
+        toast.error('Stripe failed to load');
+        return;
+      }
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+      if (error) toast.error(error.message || 'Checkout failed');
     } catch (error) {
       console.error('Checkout error:', error);
       toast.error('Checkout failed. Please try again.');
@@ -226,7 +245,6 @@ export default function CheckoutPage() {
   }
 
   if (itemsWithPrices.length === 0) {
-    router.push('/cart');
     return null;
   }
 

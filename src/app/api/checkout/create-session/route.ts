@@ -1,12 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-07-30.basil',
-});
+function toHttpsImageUrl(origin: string, image?: string): string | undefined {
+  if (!image || typeof image !== 'string') return undefined;
+  const trimmed = image.trim();
+  if (!trimmed) return undefined;
+  if (trimmed.startsWith('https://')) return trimmed;
+
+  // Stripe expects absolute URLs for images. For local/dev (http://localhost)
+  // and relative paths, omit the image rather than failing session creation.
+  if (trimmed.startsWith('http://')) return undefined;
+  if (trimmed.startsWith('/')) {
+    const absolute = `${origin}${trimmed}`;
+    return absolute.startsWith('https://') ? absolute : undefined;
+  }
+  const absolute = `${origin}/${trimmed}`;
+  return absolute.startsWith('https://') ? absolute : undefined;
+}
 
 export async function POST(request: NextRequest) {
   try {
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    if (!secretKey) {
+      return NextResponse.json(
+        { error: 'Missing STRIPE_SECRET_KEY' },
+        { status: 500 }
+      );
+    }
+
+    const stripe = new Stripe(secretKey, {
+      apiVersion: '2024-06-20',
+    });
+
     const { items, customerInfo, total } = await request.json();
 
     // Validate input
@@ -25,16 +50,20 @@ export async function POST(request: NextRequest) {
     }
 
     // Create line items for Stripe
+    const origin = request.nextUrl.origin;
     const lineItems = items.map((item: any) => ({
       price_data: {
         currency: 'usd',
         product_data: {
           name: item.title,
-          images: item.image ? [item.image] : undefined,
+          images: (() => {
+            const url = toHttpsImageUrl(origin, item.image);
+            return url ? [url] : undefined;
+          })(),
         },
-        unit_amount: item.unit_price_cents,
+        unit_amount: Number(item.unit_price_cents) || 0,
       },
-      quantity: item.qty,
+      quantity: Number(item.qty) || 0,
     }));
 
     // Add shipping and tax if applicable
@@ -48,7 +77,6 @@ export async function POST(request: NextRequest) {
           currency: 'usd',
           product_data : {
             name: 'Shipping',
-            images:[]
           },
           unit_amount: shipping,
         },
@@ -62,7 +90,6 @@ export async function POST(request: NextRequest) {
           currency: 'usd',
           product_data: {
             name: 'Tax',
-            images:[]
           },
           unit_amount: tax,
         },
@@ -102,11 +129,15 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ sessionId: session.id });
+    return NextResponse.json({ sessionId: session.id, url: session.url });
   } catch (error) {
     console.error('Stripe checkout error:', error);
+    const message =
+      typeof error === 'object' && error && 'message' in error
+        ? String((error as any).message)
+        : 'Failed to create checkout session';
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { error: message },
       { status: 500 }
     );
   }

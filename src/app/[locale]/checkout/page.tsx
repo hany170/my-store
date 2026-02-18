@@ -215,7 +215,8 @@ export default function CheckoutPage() {
       if (error) toast.error(error.message || 'Checkout failed');
     } catch (error) {
       console.error('Checkout error:', error);
-      toast.error('Checkout failed. Please try again.');
+      const message = error instanceof Error ? error.message : 'Checkout failed. Please try again.';
+      toast.error(message);
     } finally {
       setIsProcessing(false);
     }

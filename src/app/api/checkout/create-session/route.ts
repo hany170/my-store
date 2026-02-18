@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     }
 
     const stripe = new Stripe(secretKey, {
-      apiVersion: '2024-06-20',
+      // Use the library's default API version (matches installed stripe types).
     });
 
     const { items, customerInfo, total } = await request.json();
@@ -51,20 +51,22 @@ export async function POST(request: NextRequest) {
 
     // Create line items for Stripe
     const origin = request.nextUrl.origin;
-    const lineItems = items.map((item: any) => ({
-      price_data: {
-        currency: 'usd',
-        product_data: {
-          name: item.title,
-          images: (() => {
-            const url = toHttpsImageUrl(origin, item.image);
-            return url ? [url] : undefined;
-          })(),
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = items.map((item: any) => {
+      const productData: Stripe.Checkout.SessionCreateParams.LineItem.PriceData.ProductData = {
+        name: item.title,
+      };
+      const imageUrl = toHttpsImageUrl(origin, item.image);
+      if (imageUrl) productData.images = [imageUrl];
+
+      return {
+        price_data: {
+          currency: 'usd',
+          product_data: productData,
+          unit_amount: Number(item.unit_price_cents) || 0,
         },
-        unit_amount: Number(item.unit_price_cents) || 0,
-      },
-      quantity: Number(item.qty) || 0,
-    }));
+        quantity: Number(item.qty) || 0,
+      };
+    });
 
     // Add shipping and tax if applicable
     const subtotal = items.reduce((sum: number, item: any) => sum + item.total_cents, 0);
